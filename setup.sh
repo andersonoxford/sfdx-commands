@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-echo 'ThinkLP Commands Linked...'
-alias push='bash <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_push.sh)'
+echo 'UPDATED Commands'
+GITHUB_URL='https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/'
+PREFIX="bash <(curl -s ${GITHUB_URL}"
+SUFFIX=")"
+alias push='${PREFIX}source_push.sh${SUFFIX}'
