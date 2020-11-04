@@ -8,5 +8,5 @@ echo 'retrieve              (To retrieve specific metadata types from scratch to
 echo 'pull                  (Similar to retrieve but does not pull CustomLabels)'
 echo 'core_scratch          (To creates a scratch org for core)'
 echo 'auth_dev_hub          (To authorize the dev hub on your machine)'
-echo 'help_me                (To displays list of ThinkLP SFDX Commands)'
+echo 'help_me               (To displays list of ThinkLP SFDX Commands)'
 echo '---------------------------------------------------------------------'
