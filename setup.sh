@@ -1,1 +1,1 @@
-alias push='bash <(curl -s )'
+alias push='bash <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_push.sh)'
