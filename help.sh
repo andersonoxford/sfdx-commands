@@ -1,0 +1,12 @@
+echo '---------------------------------------------------------------------'
+echo 'List of ThinkLP SFDX Commands:'
+echo
+echo 'push                  (To push project to scratch org)'
+echo 'test                  (To run a specific tests)'
+echo 'push_test             (To push the code before running the tests)'
+echo 'retrieve              (To retrieve specific metadata types from scratch to project)'
+echo 'pull                  (Similar to retrieve but does not pull CustomLabels)'
+echo 'core_scratch          (To creates a scratch org for core)'
+echo 'auth_dev_hub          (To authorize the dev hub on your machine)'
+echo 'helpme                (To displays list of ThinkLP SFDX Commands)'
+echo '---------------------------------------------------------------------'
