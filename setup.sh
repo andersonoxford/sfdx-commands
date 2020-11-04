@@ -1,5 +1,5 @@
-echo 'UPDATED Command 5'
-GITHUB_URL='https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/'
-PREFIX="zsh <(curl -s ${GITHUB_URL}"
-SUFFIX=")"
-alias push='${PREFIX}source_push.sh${SUFFIX}'
+echo '-- Powered By: ThinkLP SFDX Commands --'
+alias push='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_push.sh)'
+alias pull='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_pull.sh)'
+alias retrieve='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_retrieve.sh)'
+alias runtest='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/run_test.sh)'
