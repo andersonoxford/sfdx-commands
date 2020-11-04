@@ -6,4 +6,4 @@ alias retrieve='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/s
 alias pull='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_pull.sh)'
 alias core_scratch='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/core_scratch.sh)'
 alias auth_dev_hub='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/auth_dev_hub.sh)'
-alias helpme='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/auth_dev_hub.sh)'
+alias help_me='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/auth_dev_hub.sh)'
