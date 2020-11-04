@@ -4,3 +4,4 @@ alias pull='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-
 alias retrieve='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_retrieve.sh)'
 alias test='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/run_test.sh)'
 alias core_scratch='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/core_scratch.sh)'
+alias auth_dev_hub='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/auth_dev_hub.sh)'
