@@ -1,7 +1,5 @@
 echo '-- Powered By: ThinkLP SFDX Commands --'
 push='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_push.sh)'
-test='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/run_test.sh)'
-push_test='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/push_test.sh)'
 retrieve='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_retrieve.sh)'
 pull='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_pull.sh)'
 core_scratch='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/core_scratch.sh)'
