@@ -20,13 +20,13 @@ tlp() {
       ;;
     test)
       if [ -z "$2" ]; then
-        echo "Test class names is required"
+        echo "Comma separated class names is required"
       else
         test "$2 $3"
       fi
       ;;
     *)
-      echo -n "Command with the name $1 is not found"
+      echo -n "[ $1 ] is not a command"
       ;;
     esac
   fi
