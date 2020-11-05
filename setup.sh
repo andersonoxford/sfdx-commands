@@ -22,9 +22,9 @@ tlp() {
       ;;
     test)
       if [ -z "$2" ]; then
-        echo "No test class names supplied."
+        echo "Test class names is required"
       else
-        test "$2"
+        test "$2 $3"
       fi
       ;;
     *)
