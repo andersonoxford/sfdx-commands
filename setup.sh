@@ -1,4 +1,4 @@
-echo '-- Powered By: ThinkLP SFDX Commands V (0.1) --'
+echo '-- Powered By: ThinkLP SFDX Commands (0.1) --'
 echo 'Run tlp help to see usages'
 
 tlp() {
