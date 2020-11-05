@@ -1,5 +1,5 @@
-echo '-- Powered By: ThinkLP SFDX Commands V.2.0--'
-echo 'Run tlp help to see usage'
+echo '-- Powered By: ThinkLP SFDX Commands --'
+echo 'Run tlp help to see usages'
 
 tlp() {
   # Check if function name is supplied
@@ -44,14 +44,18 @@ scratch() {
 }
 
 retrieve() {
-  command='sfdx force:source:retrieve -m "CustomField,CustomObject,CustomLabels"'
-  echo "$command"
-  command
+  echo sfdx force:source:retrieve -m "CustomField,CustomObject,CustomLabels"
+  sfdx force:source:retrieve -m "CustomField,CustomObject,CustomLabels"
 }
 
 pull() {
   echo 'sfdx force:source:pull'
   sfdx force:source:pull
+}
+
+auth() {
+  echo 'sfdx force:auth:web:login -d -a DevHub'
+  sfdx force:auth:web:login -d -a DevHub
 }
 
 core_scratch() {
@@ -82,8 +86,8 @@ help() {
   echo 'tlp push_test             (To execute the push command followed by test command)'
   echo 'tlp retrieve              (To retrieve specific metadata types from scratch to project)'
   echo 'tlp pull                  (Similar to retrieve but does not pull CustomLabels)'
-  echo 'tlp scratch               (To create a scratch org for a package)'
-  echo 'tlp auth_dev_hub          (To authorize the dev hub on your machine)'
+  echo 'tlp auth                  (To authorize the dev hub on your machine)'
   echo 'tlp help                  (To display the list of ThinkLP SFDX Commands)'
+  echo 'tlp scratch               (To create a scratch org for a package)'
   echo '---------------------------------------------------------------------'
 }
