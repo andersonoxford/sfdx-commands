@@ -1,4 +1,4 @@
-echo '-- Powered By: ThinkLP SFDX Commands --'
+echo '-- Powered By: ThinkLP SFDX Commands 2.0 --'
 echo 'Run tlp help to see usages'
 
 tlp() {
@@ -22,8 +22,8 @@ test() {
   if [ -z "$1" ]; then
     echo "Comma separated class names is required"
   else
-    echo "sfdx force:apex:test:run -n $1 $2"
-    sfdx force:apex:test:run -n "${1}${2:+-$2}"
+    echo "sfdx force:apex:test:run -y -n $1 $2"
+    sfdx force:apex:test:run -y -n "${1}${2:+-$2}"
   fi
 }
 
