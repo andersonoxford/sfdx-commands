@@ -1,4 +1,4 @@
-echo '-- Powered By: ThinkLP SFDX Commands --'
+echo '-- Powered By: ThinkLP SFDX Commands V.1.0--'
 push='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_push.sh)'
 retrieve='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_retrieve.sh)'
 pull='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_pull.sh)'
