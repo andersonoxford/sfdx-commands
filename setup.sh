@@ -1,4 +1,4 @@
-echo '-- Powered By: ThinkLP SFDX Commands V.1.6--'
+echo '-- Powered By: ThinkLP SFDX Commands V.1.8--'
 
 tlp() {
   # Check if function name is supplied
@@ -17,7 +17,7 @@ test() {
     echo "Comma separated class names is required"
   else
     echo "sfdx force:apex:test:run -n $1 $2"
-    sfdx force:apex:test:run -n "$1" "$2"
+    sfdx force:apex:test:run -n "${1}${2:+-$2}"
   fi
 }
 
