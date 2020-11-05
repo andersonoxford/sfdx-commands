@@ -1,4 +1,4 @@
-echo '-- Powered By: ThinkLP SFDX Commands V.1.4--'
+echo '-- Powered By: ThinkLP SFDX Commands V.1.5--'
 
 tlp() {
   # Check if function name is supplied
@@ -6,19 +6,8 @@ tlp() {
     echo "No function name supplied. Use tlp help to see the list of commands"
   # Switch function name
   else
-    case $1 in
-    push)
-      push "$2"
-      ;;
-    test)
-      test "$2" "$3"
-      ;;
-    *)
-      echo -n "[ $1 ] is not a command"
-      ;;
-    esac
+    "$1" "$2" "$3"
   fi
-
 }
 
 test() {
