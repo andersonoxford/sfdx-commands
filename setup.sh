@@ -26,7 +26,7 @@ tlp() {
       fi
       ;;
     *)
-      echo -n "Command with the name $1 is not found not "
+      echo -n "Command with the name $1 is not found"
       ;;
     esac
   fi
