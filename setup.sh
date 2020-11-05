@@ -1,12 +1,4 @@
-echo '-- Powered By: ThinkLP SFDX Commands V.1.2--'
-push='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_push.sh)'
-retrieve='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_retrieve.sh)'
-pull='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/source_pull.sh)'
-core_scratch='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/core_scratch.sh)'
-auth_dev_hub='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/auth_dev_hub.sh)'
-help_me='zsh <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/help.sh)'
-
-source <(curl -s https://raw.githubusercontent.com/andersonoxford/sfdx-commands/master/test.sh)
+echo '-- Powered By: ThinkLP SFDX Commands V.1.4--'
 
 tlp() {
   # Check if function name is supplied
@@ -16,14 +8,10 @@ tlp() {
   else
     case $1 in
     push)
-      push
+      push "$2"
       ;;
     test)
-      if [ -z "$2" ]; then
-        echo "Comma separated class names is required"
-      else
-        test "$2 $3"
-      fi
+      test "$2" "$3"
       ;;
     *)
       echo -n "[ $1 ] is not a command"
@@ -31,4 +19,22 @@ tlp() {
     esac
   fi
 
+}
+
+test() {
+  if [ -z "$1" ]; then
+    echo "Comma separated class names is required"
+  else
+    [ ! -d "force-app" ] && cd ../../
+    echo "sfdx force:apex:test:run -n $1 $2"
+    sfdx force:apex:test:run -n "$1" "$2"
+    [ ! -d "force-app" ] && cd ../../
+  fi
+}
+
+push() {
+  [ ! -d "force-app" ] && cd ../../
+  echo "sfdx force:source:push $1"
+  sfdx force:source:push "$1"
+  [ ! -d "force-app" ] && cd ../../
 }
