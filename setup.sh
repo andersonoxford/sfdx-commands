@@ -5,7 +5,7 @@ tlp() {
   # Check if function name is supplied
   if [ -z "$1" ]; then
     echo "No function name supplied. Use tlp help to see the list of commands"
-  # Switch function name
+  # Run function
   else
     [ ! -d "force-app" ] && cd ../../
     "$1" "$2" "$3"
