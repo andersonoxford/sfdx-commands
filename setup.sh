@@ -37,6 +37,9 @@ scratch() {
   core)
     core_scratch
     ;;
+  audit)
+    audit_scratch
+    ;;
   *)
     echo "The $1 package is not supported yet"
     ;;
@@ -75,6 +78,28 @@ core_scratch() {
   echo 'Scratch org setup complete! Opening scratch org...'
   sfdx force:org:open
   [ ! -d "force-app" ] && cd ../../
+}
+
+audit_scratch() {
+  [ ! -d "force-app" ] && cd ../../
+  SCRATCH_NAME=$(openssl rand -base64 12)
+  SCRATCH_NAME='audit-scratch-'$SCRATCH_NAME
+  echo 'Creating new scratch org for Audit...'
+  sfdx force:org:create -a $SCRATCH_NAME -s -f config/project-scratch-def.json -d 30
+  echo 'Installing Core onto scratch org...'
+  sh scripts/admin/install_core_package.sh
+  echo 'Creating scratch org components...'
+  sh scripts/admin/components/copy_components.sh
+  echo 'Scratch org components created!'
+  echo 'Pushing Audit package data to new scratch org...'
+  sfdx force:source:push
+  echo 'Assigning permission set...'
+  sfdx force:user:permset:assign -n Audit_Scratch_Permission_Set
+  echo 'Permission set assigned!'
+  echo 'Creating scratch org data!'
+  sh data/scratch_data_import.sh
+  echo 'Scratch org setup complete! Opening scratch org...'
+  sfdx force:org:open
 }
 
 help() {
