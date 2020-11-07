@@ -1,5 +1,10 @@
-echo '-- Powered By: ThinkLP SFDX Commands (0.1) --'
+echo '-- Powered By: ThinkLP SFDX Commands (0.2) --'
 echo 'Run tlp help to see usages'
+
+# This is used to format the error message
+NOCOLOR='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
 
 tlp() {
   # Check if function name is supplied
@@ -20,7 +25,7 @@ push() {
 
 test() {
   if [ -z "$1" ]; then
-    echo "Comma separated class names is required"
+    show_error "Comma separated class names is required"
   else
     echo "sfdx force:apex:test:run -y -n $1 $2"
     sfdx force:apex:test:run -y -n "${1}${2:+ $2}"
@@ -33,17 +38,40 @@ push_test() {
 }
 
 scratch() {
-  case "$1" in
-  core)
-    core_scratch
-    ;;
-  audit)
-    audit_scratch
-    ;;
-  *)
-    echo "The $1 package is not supported yet"
-    ;;
-  esac
+  # Ask package name
+  printf "Enter package name (core|audit): "
+  read -r PACKAGE_NAME
+
+  # Check package name is not null
+  if [ -z "$PACKAGE_NAME" ]; then
+    show_error "Error: Package name is required"
+  else
+    # Ask scratch name
+    printf "Enter scratch name (kebab-case): "
+    read -r SCRATCH_NAME
+
+    # Check scratch name is not null
+    if [ -z "$SCRATCH_NAME" ]; then
+      show_error "Error: Scratch name is required"
+    else
+      TODAY=$(date +"%Y-%m-%d")
+      SCRATCH_NAME="$SCRATCH_NAME"_Core_"$TODAY"
+      feedback "Creating new scratch org for $PACKAGE_NAME with name $SCRATCH_NAME"
+
+      # Switch package name
+      case "$PACKAGE_NAME" in
+      core)
+        core_scratch "$SCRATCH_NAME"
+        ;;
+      audit)
+        audit_scratch "$SCRATCH_NAME"
+        ;;
+      *)
+        show_error "The $PACKAGE_NAME package is not supported yet"
+        ;;
+      esac
+    fi
+  fi
 }
 
 retrieve() {
@@ -62,30 +90,22 @@ auth() {
 }
 
 core_scratch() {
-  [ ! -d "force-app" ] && cd ../../
-  TODAY=$(date +"%Y%m%d")
-  SCRATCH_NAME=$(openssl rand -base64 6)
-  SCRATCH_NAME='core-scratch_'$TODAY'_'$SCRATCH_NAME
-  echo 'Creating new scratch org for Core with name '$SCRATCH_NAME
-  sfdx force:org:create -a $SCRATCH_NAME -s -f config/project-scratch-def.json --durationdays 30
+  SCRATCH_NAME="$1"
+  sfdx force:org:create -a "$SCRATCH_NAME" -s -f config/project-scratch-def.json --durationdays 30
   sh scripts/admin/scratchComponents/migrate_components.sh
-  echo 'Pushing Core package data to new scratch org...'
+  feedback "Pushing Core package data to new scratch org..."
   sfdx force:source:push
   sfdx force:user:permset:assign --permsetname Core_Scratch
-  echo 'Permission set assigned'
-  echo 'Creating scratch org data'
+  feedback 'Permission set assigned'
+  feedback 'Creating scratch org data'
   sh data/data_import.sh
-  echo 'Scratch org setup complete! Opening scratch org...'
+  feedback 'Scratch org setup complete! Opening scratch org...'
   sfdx force:org:open
-  [ ! -d "force-app" ] && cd ../../
 }
 
 audit_scratch() {
-  [ ! -d "force-app" ] && cd ../../
-  SCRATCH_NAME=$(openssl rand -base64 12)
-  SCRATCH_NAME='audit-scratch-'$SCRATCH_NAME
-  echo 'Creating new scratch org for Audit...'
-  sfdx force:org:create -a $SCRATCH_NAME -s -f config/project-scratch-def.json -d 30
+  SCRATCH_NAME="$1"
+  sfdx force:org:create -a "$SCRATCH_NAME" -s -f config/project-scratch-def.json -d 30
   echo 'Installing Core onto scratch org...'
   sh scripts/admin/install_core_package.sh
   echo 'Creating scratch org components...'
@@ -103,16 +123,26 @@ audit_scratch() {
 }
 
 help() {
-  echo '---------------------------------------------------------------------'
-  echo 'List of ThinkLP SFDX Commands:'
+  feedback '---------------------------------------------------------------------'
+  feedback 'List of ThinkLP SFDX Commands:'
+  feedback
+  feedback 'tlp push                  (To push project to scratch org)'
+  feedback 'tlp test                  (To run a specific test classes)'
+  feedback 'tlp push_test             (To execute the push command followed by test command)'
+  feedback 'tlp retrieve              (To retrieve specific metadata types from scratch to project)'
+  feedback 'tlp pull                  (Similar to retrieve but does not pull CustomLabels)'
+  feedback 'tlp auth                  (To authorize the dev hub on your machine)'
+  feedback 'tlp help                  (To display the list of ThinkLP SFDX Commands)'
+  feedback 'tlp scratch               (To create a scratch org for a package)'
+  feedback '---------------------------------------------------------------------'
+}
+
+feedback() {
+  echo "${GREEN}$1${NOCOLOR}"
+}
+
+show_error() {
   echo
-  echo 'tlp push                  (To push project to scratch org)'
-  echo 'tlp test                  (To run a specific test classes)'
-  echo 'tlp push_test             (To execute the push command followed by test command)'
-  echo 'tlp retrieve              (To retrieve specific metadata types from scratch to project)'
-  echo 'tlp pull                  (Similar to retrieve but does not pull CustomLabels)'
-  echo 'tlp auth                  (To authorize the dev hub on your machine)'
-  echo 'tlp help                  (To display the list of ThinkLP SFDX Commands)'
-  echo 'tlp scratch               (To create a scratch org for a package)'
-  echo '---------------------------------------------------------------------'
+  echo "${RED}$1${NOCOLOR}"
+  echo
 }
