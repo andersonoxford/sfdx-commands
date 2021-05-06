@@ -92,7 +92,6 @@ auth() {
 core_scratch() {
   SCRATCH_NAME="$1"
   sfdx force:org:create -a "$SCRATCH_NAME" -s -f config/project-scratch-def.json --durationdays 30
-  sh scripts/admin/scratchComponents/migrate_components.sh
   feedback "Pushing Core package data to new scratch org..."
   sfdx force:source:push
   sfdx force:user:permset:assign --permsetname Core_Scratch
