@@ -46,7 +46,7 @@ scratch() {
   DEV_HUB_USERNAME=$(cat '.sfdx/sfdx-config.json' | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["defaultdevhubusername"]')
 
   # Ask package name
-  printf "Enter package name (core|audit): "
+  printf "Enter package name (core|audit|feb): "
   read -r PACKAGE_NAME
 
   # Check package name is not null
@@ -73,6 +73,9 @@ scratch() {
       audit)
         audit_scratch "$SCRATCH_NAME" "$DEV_HUB_USERNAME"
         ;;
+      feb)
+        create_scratch "$SCRATCH_NAME" "$DEV_HUB_USERNAME"
+        ;;
       *)
         show_error "The $PACKAGE_NAME package is not supported yet"
         ;;
@@ -94,6 +97,23 @@ pull() {
 auth() {
   echo 'sfdx force:auth:web:login -d -a DevHub'
   sfdx force:auth:web:login -d -a DevHub
+}
+
+create_scratch() {
+  SCRATCH_NAME="$1"
+  DEV_HUB_USERNAME="$2"
+  sfdx force:org:create -a "$SCRATCH_NAME" -s -f config/project-scratch-def.json -v "$DEV_HUB_USERNAME" -d 30
+  feedback "Pushing package data to new scratch org..."
+  sfdx force:source:push
+  sfdx force:user:permset:assign --permsetname Scratch_Permissions
+  feedback 'Permission set assigned'
+  feedback 'Creating scratch org data'
+  sh data/data_import.sh
+  if [ -f data/ExecuteAnonymousCode.apex ]; then
+    sfdx force:apex:execute -f data/executeAnonymousCode.apex
+  fi
+  feedback 'Scratch org setup complete! Opening scratch org...'
+  sfdx force:org:open
 }
 
 core_scratch() {
